@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.indigo,
+        canvasColor: Color(0xffffab58),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomeScreen(),
