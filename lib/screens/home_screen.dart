@@ -2,6 +2,7 @@ import 'package:blobs/blobs.dart';
 import 'package:flutter/material.dart';
 import 'package:productive_hour_tracker/widgets/my_blob_container.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:productive_hour_tracker/widgets/side_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -9,110 +10,114 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool isSelected = false;
-
   @override
   Widget build(BuildContext context) {
-    BlobController blobCtrl = BlobController();
-    var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              // padding: EdgeInsets.symmetric(horizontal: size.width * .03),
-              child: GridView.count(
-                shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                childAspectRatio: 100 / 50,
-                crossAxisCount: 1,
-                children: [
-                  ..._hours.map(
-                    (HourModal h) => MyBlobContainer(
-                      myBlobColor: Colors.blue.shade700,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Container(
-                            child: Center(
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '${h.hour}',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 38,
-                                    ),
-                                  ),
-                                  Text(
-                                    '${h.meridiem}',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: Feedback.wrapForTap(() {
-                                    BlobData blobData = h.ctrl.change();
-                                    print(blobData);
-                                    setState(() {
-                                      h.changeIcon = !h.changeIcon;
-                                      h.longPressed = false;
-                                    });
-                                  }, context),
-                                  onLongPress: Feedback.wrapForLongPress(() {
-                                    BlobData blobData = h.ctrl.change();
-                                    print(blobData);
-                                    setState(() {
-                                      h.longPressed = !h.longPressed;
-                                    });
-                                  }, context),
-                                  child: Container(
-                                    child: Blob.animatedRandom(
-                                      edgesCount: 7,
-                                      minGrowth: 8,
-                                      size: 110,
-                                      controller: h.ctrl,
-                                      duration: Duration(milliseconds: 500),
-                                      styles: BlobStyles(
-                                        color: Theme.of(context).accentColor,
-                                      ),
-                                      child: Center(
-                                        child: FaIcon(
-                                          (h.longPressed)
-                                              ? FontAwesomeIcons.circle
-                                              : (h.changeIcon)
-                                                  ? FontAwesomeIcons.check
-                                                  : FontAwesomeIcons.times,
-                                          size: 25,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  // padding: EdgeInsets.symmetric(horizontal: size.width * .03),
+                  child: GridView.count(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 100 / 50,
+                    crossAxisCount: 1,
+                    children: [
+                      ..._hours.map(
+                        (HourModal h) => MyBlobContainer(
+                          myBlobColor: Colors.blue.shade700,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                child: Center(
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${h.hour}',
+                                        style: TextStyle(
                                           color: Colors.white,
+                                          fontSize: 38,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${h.meridiem}',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: Feedback.wrapForTap(() {
+                                        BlobData blobData = h.ctrl.change();
+                                        print(blobData);
+                                        setState(() {
+                                          h.changeIcon = !h.changeIcon;
+                                          h.longPressed = false;
+                                        });
+                                      }, context),
+                                      onLongPress:
+                                          Feedback.wrapForLongPress(() {
+                                        BlobData blobData = h.ctrl.change();
+                                        print(blobData);
+                                        setState(() {
+                                          h.longPressed = !h.longPressed;
+                                        });
+                                      }, context),
+                                      child: Container(
+                                        child: Blob.animatedRandom(
+                                          edgesCount: 7,
+                                          minGrowth: 8,
+                                          size: 110,
+                                          controller: h.ctrl,
+                                          duration: Duration(milliseconds: 500),
+                                          styles: BlobStyles(
+                                            color:
+                                                Theme.of(context).accentColor,
+                                          ),
+                                          child: Center(
+                                            child: FaIcon(
+                                              (h.longPressed)
+                                                  ? FontAwesomeIcons.circle
+                                                  : (h.changeIcon)
+                                                      ? FontAwesomeIcons.check
+                                                      : FontAwesomeIcons.times,
+                                              size: 25,
+                                              color: Colors.white,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          SideDrawer(),
+        ],
       ),
     );
   }
