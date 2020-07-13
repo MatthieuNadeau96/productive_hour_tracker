@@ -1,5 +1,6 @@
 import 'package:blobs/blobs.dart';
 import 'package:flutter/material.dart';
+import 'package:productive_hour_tracker/widgets/my_blob_container.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,10 +14,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Productive Hour Tracker'),
-        centerTitle: true,
-      ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: size.width * .03),
         child: GridView.count(
@@ -28,15 +25,14 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisCount: 1,
           children: [
             ..._hours.map(
-              (HourModal h) => Container(
-                decoration: BoxDecoration(
-                  color: Colors.green[200],
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                margin: EdgeInsets.symmetric(vertical: 25),
-                padding: EdgeInsets.only(left: 20),
+              (HourModal h) => MyBlobContainer(
+                // decoration: BoxDecoration(
+                //   borderRadius: BorderRadius.circular(50),
+                // ),
+                // margin: EdgeInsets.symmetric(vertical: 25),
+                // padding: EdgeInsets.only(left: 20),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
                       child: Center(
@@ -46,12 +42,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               '${h.hour}',
                               style: TextStyle(
+                                color: Colors.white,
                                 fontSize: 28,
                               ),
                             ),
                             Text(
                               '${h.meridiem}',
                               style: TextStyle(
+                                color: Colors.white,
                                 fontSize: 14,
                               ),
                             ),
@@ -67,11 +65,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             width: size.width * 0.28,
                             child: Center(
                               child: Blob.random(
-                                edgesCount: 5,
-                                minGrowth: 7,
-                                size: 120,
+                                edgesCount: 7,
+                                minGrowth: 8,
+                                size: 100,
                                 styles: BlobStyles(
-                                  color: Colors.indigo,
+                                  color: Theme.of(context).accentColor,
                                 ),
                                 child: GestureDetector(
                                   onTap: () {
