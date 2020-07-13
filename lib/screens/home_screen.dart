@@ -1,6 +1,7 @@
 import 'package:blobs/blobs.dart';
 import 'package:flutter/material.dart';
 import 'package:productive_hour_tracker/widgets/my_blob_container.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -61,41 +62,41 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Row(
                               children: [
                                 GestureDetector(
-                                  onTap: () {
+                                  onTap: Feedback.wrapForTap(() {
                                     BlobData blobData = h.ctrl.change();
                                     print(blobData);
                                     setState(() {
                                       h.changeIcon = !h.changeIcon;
                                       h.longPressed = false;
                                     });
-                                  },
-                                  onLongPress: () {
+                                  }, context),
+                                  onLongPress: Feedback.wrapForLongPress(() {
                                     BlobData blobData = h.ctrl.change();
                                     print(blobData);
                                     setState(() {
                                       h.longPressed = !h.longPressed;
                                     });
-                                  },
+                                  }, context),
                                   child: Container(
-                                    // height: size.height * 0.2,
-                                    // width: size.width * 0.28,
                                     child: Blob.animatedRandom(
                                       edgesCount: 7,
                                       minGrowth: 8,
-                                      size: 100,
+                                      size: 110,
                                       controller: h.ctrl,
                                       duration: Duration(milliseconds: 500),
                                       styles: BlobStyles(
                                         color: Theme.of(context).accentColor,
                                       ),
-                                      child: Icon(
-                                        (h.changeIcon)
-                                            ? Icons.check
-                                            : (h.longPressed)
-                                                ? Icons.remove_circle_outline
-                                                : Icons.cancel,
-                                        size: 35,
-                                        color: Colors.white,
+                                      child: Center(
+                                        child: FaIcon(
+                                          (h.longPressed)
+                                              ? FontAwesomeIcons.circle
+                                              : (h.changeIcon)
+                                                  ? FontAwesomeIcons.check
+                                                  : FontAwesomeIcons.times,
+                                          size: 25,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ),
