@@ -70,6 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     });
                                   },
                                   onLongPress: () {
+                                    BlobData blobData = h.ctrl.change();
+                                    print(blobData);
                                     setState(() {
                                       h.longPressed = !h.longPressed;
                                     });
