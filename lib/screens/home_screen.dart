@@ -12,67 +12,58 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    BlobController blobCtrl = BlobController();
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: size.width * .03),
-        child: GridView.count(
-          shrinkWrap: true,
-          physics: ClampingScrollPhysics(),
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          childAspectRatio: 100 / 50,
-          crossAxisCount: 1,
+      body: SingleChildScrollView(
+        child: Column(
           children: [
-            ..._hours.map(
-              (HourModal h) => MyBlobContainer(
-                // decoration: BoxDecoration(
-                //   borderRadius: BorderRadius.circular(50),
-                // ),
-                // margin: EdgeInsets.symmetric(vertical: 25),
-                // padding: EdgeInsets.only(left: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      child: Center(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${h.hour}',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 28,
-                              ),
-                            ),
-                            Text(
-                              '${h.meridiem}',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
+            Container(
+              // padding: EdgeInsets.symmetric(horizontal: size.width * .03),
+              child: GridView.count(
+                shrinkWrap: true,
+                physics: ClampingScrollPhysics(),
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                childAspectRatio: 100 / 50,
+                crossAxisCount: 1,
+                children: [
+                  ..._hours.map(
+                    (HourModal h) => MyBlobContainer(
+                      myBlobColor: Colors.blue.shade700,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Container(
-                            height: size.height * 0.2,
-                            width: size.width * 0.28,
                             child: Center(
-                              child: Blob.random(
-                                edgesCount: 7,
-                                minGrowth: 8,
-                                size: 100,
-                                styles: BlobStyles(
-                                  color: Theme.of(context).accentColor,
-                                ),
-                                child: GestureDetector(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${h.hour}',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 38,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${h.meridiem}',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Row(
+                              children: [
+                                GestureDetector(
                                   onTap: () {
+                                    BlobData blobData = h.ctrl.change();
+                                    print(blobData);
                                     setState(() {
                                       h.changeIcon = !h.changeIcon;
                                       h.longPressed = false;
@@ -83,24 +74,38 @@ class _HomeScreenState extends State<HomeScreen> {
                                       h.longPressed = !h.longPressed;
                                     });
                                   },
-                                  child: Icon(
-                                    (h.changeIcon)
-                                        ? Icons.check
-                                        : (h.longPressed)
-                                            ? Icons.remove_circle_outline
-                                            : Icons.cancel,
-                                    size: 35,
-                                    color: Colors.white,
+                                  child: Container(
+                                    // height: size.height * 0.2,
+                                    // width: size.width * 0.28,
+                                    child: Blob.animatedRandom(
+                                      edgesCount: 7,
+                                      minGrowth: 8,
+                                      size: 100,
+                                      controller: h.ctrl,
+                                      duration: Duration(milliseconds: 500),
+                                      styles: BlobStyles(
+                                        color: Theme.of(context).accentColor,
+                                      ),
+                                      child: Icon(
+                                        (h.changeIcon)
+                                            ? Icons.check
+                                            : (h.longPressed)
+                                                ? Icons.remove_circle_outline
+                                                : Icons.cancel,
+                                        size: 35,
+                                        color: Colors.white,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -113,6 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
 class HourModal {
   final String hour;
   final String meridiem;
+  final BlobController ctrl;
   bool changeIcon;
   bool longPressed;
 
@@ -121,31 +127,32 @@ class HourModal {
     this.changeIcon = false,
     this.longPressed = false,
     this.meridiem,
+    this.ctrl,
   });
 }
 
 List<HourModal> _hours = [
-  HourModal(hour: '1', meridiem: 'am'),
-  HourModal(hour: '2', meridiem: 'am'),
-  HourModal(hour: '3', meridiem: 'am'),
-  HourModal(hour: '4', meridiem: 'am'),
-  HourModal(hour: '5', meridiem: 'am'),
-  HourModal(hour: '6', meridiem: 'am'),
-  HourModal(hour: '7', meridiem: 'am'),
-  HourModal(hour: '8', meridiem: 'am'),
-  HourModal(hour: '9', meridiem: 'am'),
-  HourModal(hour: '10', meridiem: 'am'),
-  HourModal(hour: '12', meridiem: 'pm'),
-  HourModal(hour: '1', meridiem: 'pm'),
-  HourModal(hour: '2', meridiem: 'pm'),
-  HourModal(hour: '3', meridiem: 'pm'),
-  HourModal(hour: '4', meridiem: 'pm'),
-  HourModal(hour: '5', meridiem: 'pm'),
-  HourModal(hour: '6', meridiem: 'pm'),
-  HourModal(hour: '7', meridiem: 'pm'),
-  HourModal(hour: '8', meridiem: 'pm'),
-  HourModal(hour: '9', meridiem: 'pm'),
-  HourModal(hour: '10', meridiem: 'pm'),
-  HourModal(hour: '11', meridiem: 'pm'),
-  HourModal(hour: '12', meridiem: 'am'),
+  HourModal(hour: '1', meridiem: 'am', ctrl: BlobController()),
+  HourModal(hour: '2', meridiem: 'am', ctrl: BlobController()),
+  HourModal(hour: '3', meridiem: 'am', ctrl: BlobController()),
+  HourModal(hour: '4', meridiem: 'am', ctrl: BlobController()),
+  HourModal(hour: '5', meridiem: 'am', ctrl: BlobController()),
+  HourModal(hour: '6', meridiem: 'am', ctrl: BlobController()),
+  HourModal(hour: '7', meridiem: 'am', ctrl: BlobController()),
+  HourModal(hour: '8', meridiem: 'am', ctrl: BlobController()),
+  HourModal(hour: '9', meridiem: 'am', ctrl: BlobController()),
+  HourModal(hour: '10', meridiem: 'am', ctrl: BlobController()),
+  HourModal(hour: '12', meridiem: 'pm', ctrl: BlobController()),
+  HourModal(hour: '1', meridiem: 'pm', ctrl: BlobController()),
+  HourModal(hour: '2', meridiem: 'pm', ctrl: BlobController()),
+  HourModal(hour: '3', meridiem: 'pm', ctrl: BlobController()),
+  HourModal(hour: '4', meridiem: 'pm', ctrl: BlobController()),
+  HourModal(hour: '5', meridiem: 'pm', ctrl: BlobController()),
+  HourModal(hour: '6', meridiem: 'pm', ctrl: BlobController()),
+  HourModal(hour: '7', meridiem: 'pm', ctrl: BlobController()),
+  HourModal(hour: '8', meridiem: 'pm', ctrl: BlobController()),
+  HourModal(hour: '9', meridiem: 'pm', ctrl: BlobController()),
+  HourModal(hour: '10', meridiem: 'pm', ctrl: BlobController()),
+  HourModal(hour: '11', meridiem: 'pm', ctrl: BlobController()),
+  HourModal(hour: '12', meridiem: 'am', ctrl: BlobController()),
 ];

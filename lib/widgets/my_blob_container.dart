@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 
 class MyBlobContainer extends StatelessWidget {
+  final Color myBlobColor;
   final Widget child;
-  MyBlobContainer({this.child});
+  MyBlobContainer({this.child, this.myBlobColor});
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: BlobPainter(),
+      painter: BlobPainter(myBlobColor: myBlobColor),
       child: child,
     );
   }
 }
 
 class BlobPainter extends CustomPainter {
+  final Color myBlobColor;
+  BlobPainter({this.myBlobColor});
   @override
   void paint(Canvas canvas, Size size) {
     final height = size.height;
@@ -53,7 +56,7 @@ class BlobPainter extends CustomPainter {
 
     ovalPath.close();
 
-    paint.color = Colors.blue.shade700;
+    paint.color = myBlobColor;
     canvas.drawPath(ovalPath, paint);
   }
 
