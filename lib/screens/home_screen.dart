@@ -1,8 +1,8 @@
 import 'package:blobs/blobs.dart';
 import 'package:flutter/material.dart';
+import 'package:productive_hour_tracker/screens/day_picker_screen.dart';
 import 'package:productive_hour_tracker/widgets/my_blob_container.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:productive_hour_tracker/widgets/side_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,6 +13,27 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Squeesh'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: FaIcon(FontAwesomeIcons.ellipsisV),
+            onPressed: () {},
+          ),
+        ],
+        leading: IconButton(
+          icon: FaIcon(
+            FontAwesomeIcons.calendar,
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DayPickerScreen()),
+            );
+          },
+        ),
+      ),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -29,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisCount: 1,
                     children: [
                       ..._hours.map(
-                        (HourModal h) => MyBlobContainer(
+                        (HourModel h) => MyBlobContainer(
                           myBlobColor: Colors.blue.shade700,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -116,21 +137,20 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          SideDrawer(),
         ],
       ),
     );
   }
 }
 
-class HourModal {
+class HourModel {
   final String hour;
   final String meridiem;
   final BlobController ctrl;
   bool changeIcon;
   bool longPressed;
 
-  HourModal({
+  HourModel({
     this.hour,
     this.changeIcon = false,
     this.longPressed = false,
@@ -139,28 +159,28 @@ class HourModal {
   });
 }
 
-List<HourModal> _hours = [
-  HourModal(hour: '1', meridiem: 'am', ctrl: BlobController()),
-  HourModal(hour: '2', meridiem: 'am', ctrl: BlobController()),
-  HourModal(hour: '3', meridiem: 'am', ctrl: BlobController()),
-  HourModal(hour: '4', meridiem: 'am', ctrl: BlobController()),
-  HourModal(hour: '5', meridiem: 'am', ctrl: BlobController()),
-  HourModal(hour: '6', meridiem: 'am', ctrl: BlobController()),
-  HourModal(hour: '7', meridiem: 'am', ctrl: BlobController()),
-  HourModal(hour: '8', meridiem: 'am', ctrl: BlobController()),
-  HourModal(hour: '9', meridiem: 'am', ctrl: BlobController()),
-  HourModal(hour: '10', meridiem: 'am', ctrl: BlobController()),
-  HourModal(hour: '12', meridiem: 'pm', ctrl: BlobController()),
-  HourModal(hour: '1', meridiem: 'pm', ctrl: BlobController()),
-  HourModal(hour: '2', meridiem: 'pm', ctrl: BlobController()),
-  HourModal(hour: '3', meridiem: 'pm', ctrl: BlobController()),
-  HourModal(hour: '4', meridiem: 'pm', ctrl: BlobController()),
-  HourModal(hour: '5', meridiem: 'pm', ctrl: BlobController()),
-  HourModal(hour: '6', meridiem: 'pm', ctrl: BlobController()),
-  HourModal(hour: '7', meridiem: 'pm', ctrl: BlobController()),
-  HourModal(hour: '8', meridiem: 'pm', ctrl: BlobController()),
-  HourModal(hour: '9', meridiem: 'pm', ctrl: BlobController()),
-  HourModal(hour: '10', meridiem: 'pm', ctrl: BlobController()),
-  HourModal(hour: '11', meridiem: 'pm', ctrl: BlobController()),
-  HourModal(hour: '12', meridiem: 'am', ctrl: BlobController()),
+List<HourModel> _hours = [
+  HourModel(hour: '1', meridiem: 'am', ctrl: BlobController()),
+  HourModel(hour: '2', meridiem: 'am', ctrl: BlobController()),
+  HourModel(hour: '3', meridiem: 'am', ctrl: BlobController()),
+  HourModel(hour: '4', meridiem: 'am', ctrl: BlobController()),
+  HourModel(hour: '5', meridiem: 'am', ctrl: BlobController()),
+  HourModel(hour: '6', meridiem: 'am', ctrl: BlobController()),
+  HourModel(hour: '7', meridiem: 'am', ctrl: BlobController()),
+  HourModel(hour: '8', meridiem: 'am', ctrl: BlobController()),
+  HourModel(hour: '9', meridiem: 'am', ctrl: BlobController()),
+  HourModel(hour: '10', meridiem: 'am', ctrl: BlobController()),
+  HourModel(hour: '12', meridiem: 'pm', ctrl: BlobController()),
+  HourModel(hour: '1', meridiem: 'pm', ctrl: BlobController()),
+  HourModel(hour: '2', meridiem: 'pm', ctrl: BlobController()),
+  HourModel(hour: '3', meridiem: 'pm', ctrl: BlobController()),
+  HourModel(hour: '4', meridiem: 'pm', ctrl: BlobController()),
+  HourModel(hour: '5', meridiem: 'pm', ctrl: BlobController()),
+  HourModel(hour: '6', meridiem: 'pm', ctrl: BlobController()),
+  HourModel(hour: '7', meridiem: 'pm', ctrl: BlobController()),
+  HourModel(hour: '8', meridiem: 'pm', ctrl: BlobController()),
+  HourModel(hour: '9', meridiem: 'pm', ctrl: BlobController()),
+  HourModel(hour: '10', meridiem: 'pm', ctrl: BlobController()),
+  HourModel(hour: '11', meridiem: 'pm', ctrl: BlobController()),
+  HourModel(hour: '12', meridiem: 'am', ctrl: BlobController()),
 ];
