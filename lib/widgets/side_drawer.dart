@@ -74,6 +74,37 @@ class _SideDrawerState extends State<SideDrawer> {
               _offset = Offset(0, 0);
             });
           },
+          onHorizontalDragUpdate: (details) {
+            // print(details.localPosition.dx);
+            if (details.localPosition.dx < 100) {
+              setState(() {
+                isMenuOpen = false;
+              });
+            }
+            if (details.localPosition.dx > 280) {
+              setState(() {
+                isMenuOpen = true;
+              });
+            }
+
+            if (details.localPosition.dx <= sideBarSize) {
+              setState(() {
+                _offset = details.localPosition;
+              });
+            }
+
+            if (details.localPosition.dx > sideBarSize - 20 &&
+                details.delta.distanceSquared > 2) {
+              setState(() {
+                isMenuOpen = true;
+              });
+            }
+          },
+          onHorizontalDragEnd: (details) {
+            setState(() {
+              _offset = Offset(0, 0);
+            });
+          },
           child: Stack(
             children: [
               CustomPaint(
