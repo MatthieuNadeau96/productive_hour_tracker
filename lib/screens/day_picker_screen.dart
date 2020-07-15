@@ -12,8 +12,10 @@ class _DayPickerScreenState extends State<DayPickerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Day Picker'),
-        centerTitle: true,
+        title: Text(
+          'Day Picker',
+          style: TextStyle(color: Theme.of(context).textTheme.headline1.color),
+        ),
       ),
       body: GridView.count(
         shrinkWrap: true,
